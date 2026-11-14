@@ -227,7 +227,11 @@ body {
   margin-bottom: 30px;
 }
 
+<<<<<<< HEAD
 .eyebrow {
+=======
+.data {
+>>>>>>> e91c6e1bf13bfa0e76ed281c4e27b4d2c7cc3f70
   margin-bottom: 10px;
 
   color: #5b50d6;
@@ -448,6 +452,37 @@ body {
     color: #94a3b8;
 }
 
+<<<<<<< HEAD
+=======
+.form-group select {
+  width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 13px 15px;
+    font-size: 15px;
+    color: #1e293b;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group select:invalid {
+    color: #94a3b8;
+}
+
+.form-group select:focus {
+    border-color: #5b4bdb;
+    box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.12);
+}
+
+/* Placeholder */
+.form-group select::placeholder {
+    color: #94a3b8;
+}
+
+>>>>>>> e91c6e1bf13bfa0e76ed281c4e27b4d2c7cc3f70
 /* Add Book Button */
 .add-btn {
     width: fit-content;
@@ -519,8 +554,19 @@ body {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
+<<<<<<< HEAD
 }
 
+=======
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+}
+
+.book-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+>>>>>>> e91c6e1bf13bfa0e76ed281c4e27b4d2c7cc3f70
 .book-card-actions {
     display: flex;
     gap: 12px;
@@ -541,11 +587,27 @@ body {
     color: white;
 }
 
+<<<<<<< HEAD
+=======
+.edit-btn:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+>>>>>>> e91c6e1bf13bfa0e76ed281c4e27b4d2c7cc3f70
 .delete-btn {
     background: #fee2e2;
     color: #b91c1c;
 }
 
+<<<<<<< HEAD
+=======
+.delete-btn:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+>>>>>>> e91c6e1bf13bfa0e76ed281c4e27b4d2c7cc3f70
 .edit-book-form {
     display: flex;
     flex-direction: column;
@@ -579,6 +641,19 @@ body {
     color: #1f2937;
 }
 
+<<<<<<< HEAD
+=======
+.edit-book-form select{
+   width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+
+}
+
+>>>>>>> e91c6e1bf13bfa0e76ed281c4e27b4d2c7cc3f70
    /* 8. RESPONSIVE DESIGN */
 
 

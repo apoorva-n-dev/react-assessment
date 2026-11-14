@@ -206,7 +206,11 @@ function BookCard({ book, onDelete, onUpdate }) {
               className="edit-btn"
               onClick={handleEditClick}
             >
+<<<<<<< HEAD
               ✏️ Update
+=======
+              ✏️ Edit
+>>>>>>> e91c6e1bf13bfa0e76ed281c4e27b4d2c7cc3f70
             </button>
 
             <button
