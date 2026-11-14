@@ -1,195 +1,226 @@
+
 import { useState } from "react";
 
 function BookCard({ book, onDelete, onUpdate }) {
-    const [isEditing, setIsEditing] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-    const [formData, setFormData] = useState({
-        title: book.title || "",
-        author: book.author || "",
-        category: book.category || "",
-        isbn: book.isbn || "",
+  const [formData, setFormData] = useState({
+    title: book.title || "",
+    author: book.author || "",
+    category: book.category || "",
+    isbn: book.isbn || "",
+    status: book.status || "available",
+  });
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData((previousData) => ({
+      ...previousData,
+      [name]: value,
+    }));
+  }
+
+  async function handleUpdate(event) {
+    event.preventDefault();
+
+    const cleanedData = {
+      title: formData.title.trim(),
+      author: formData.author.trim(),
+      category: formData.category.trim(),
+      isbn: formData.isbn.trim(),
+      status: formData.status,
+    };
+
+    if (
+      !cleanedData.title ||
+      !cleanedData.author ||
+      !cleanedData.category ||
+      !cleanedData.isbn ||
+      !cleanedData.status
+    ) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      const success = await onUpdate(book.id, cleanedData);
+
+      if (success) {
+        setIsEditing(false);
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+      alert("Unable to update the book.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  function handleEditClick() {
+    setFormData({
+      title: book.title || "",
+      author: book.author || "",
+      category: book.category || "",
+      isbn: book.isbn || "",
+      status: book.status || "available",
     });
 
-    /* Handle Input Changes */
-    function handleChange(event) {
-        const { name, value } = event.target;
+    setIsEditing(true);
+  }
 
-        setFormData((previousData) => ({
-            ...previousData,
-            [name]: value,
-        }));
-    }
+  function handleCancel() {
+    setFormData({
+      title: book.title || "",
+      author: book.author || "",
+      category: book.category || "",
+      isbn: book.isbn || "",
+      status: book.status || "available",
+    });
 
-    /* Update Book */
-    async function handleUpdate(event) {
-        event.preventDefault();
+    setIsEditing(false);
+  }
 
-        const cleanedData = {
-            title: formData.title.trim(),
-            author: formData.author.trim(),
-            category: formData.category.trim(),
-            isbn: formData.isbn.trim(),
-        };
+  const normalizedStatus = (
+    book.status || "available"
+  ).toLowerCase();
 
-        if (
-            !cleanedData.title ||
-            !cleanedData.author ||
-            !cleanedData.category ||
-            !cleanedData.isbn
-        ) {
-            alert("Please fill in all fields.");
-            return;
-        }
+  return (
+    <div className="book-card">
+      {isEditing ? (
+        <form
+          onSubmit={handleUpdate}
+          className="edit-book-form"
+        >
+          <h3>Edit Book</h3>
 
-        setSubmitting(true);
+          <label htmlFor={`title-${book.id}`}>
+            Book Title
+          </label>
+          <input
+            id={`title-${book.id}`}
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
 
-        try {
-            const success = await onUpdate(
-                book.id,
-                cleanedData
-            );
+          <label htmlFor={`author-${book.id}`}>
+            Author
+          </label>
+          <input
+            id={`author-${book.id}`}
+            name="author"
+            value={formData.author}
+            onChange={handleChange}
+            required
+          />
 
-            if (success) {
-                setIsEditing(false);
-            }
-        } finally {
-            setSubmitting(false);
-        }
-    }
+          <label htmlFor={`category-${book.id}`}>
+            Category
+          </label>
+          <input
+            id={`category-${book.id}`}
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+          />
 
-    /* Book Card */
-    return (
-        <div className="book-card">
-            {isEditing ? (
-                <form
-                    onSubmit={handleUpdate}
-                    className="edit-book-form"
-                >
-                    <h3>Edit Book</h3>
+          <label htmlFor={`isbn-${book.id}`}>
+            ISBN
+          </label>
+          <input
+            id={`isbn-${book.id}`}
+            name="isbn"
+            value={formData.isbn}
+            onChange={handleChange}
+            required
+          />
 
-                    <label htmlFor={`title-${book.id}`}>
-                        Book Title
-                    </label>
+          <label htmlFor={`status-${book.id}`}>
+            Status
+          </label>
+          <select
+            id={`status-${book.id}`}
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            required
+          >
+            <option value="available">Available</option>
+            <option value="not available">
+              Not Available
+            </option>
+          </select>
 
-                    <input
-                        id={`title-${book.id}`}
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        required
-                    />
+          <button
+            type="submit"
+            className="edit-submit-btn"
+            disabled={submitting}
+          >
+            {submitting ? "Updating..." : "Save Changes"}
+          </button>
 
-                    <label htmlFor={`author-${book.id}`}>
-                        Author
-                    </label>
+          <button
+            type="button"
+            className="edit-cancel-btn"
+            onClick={handleCancel}
+            disabled={submitting}
+          >
+            Cancel
+          </button>
+        </form>
+      ) : (
+        <>
+          <div className="book-card-content">
+            <h3>{book.title}</h3>
 
-                    <input
-                        id={`author-${book.id}`}
-                        name="author"
-                        value={formData.author}
-                        onChange={handleChange}
-                        required
-                    />
+            <p>
+              <strong>Author:</strong> {book.author}
+            </p>
 
-                    <label htmlFor={`category-${book.id}`}>
-                        Category
-                    </label>
+            <p>
+              <strong>Category:</strong>{" "}
+              {book.category || "N/A"}
+            </p>
 
-                    <input
-                        id={`category-${book.id}`}
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                        required
-                    />
+            <p>
+              <strong>ISBN:</strong> {book.isbn || "N/A"}
+            </p>
 
-                    <label htmlFor={`isbn-${book.id}`}>
-                        ISBN
-                    </label>
+            <p>
+              <strong>Status:</strong>{" "}
+              {normalizedStatus === "available"
+                ? "Available"
+                : "Not Available"}
+            </p>
+          </div>
 
-                    <input
-                        id={`isbn-${book.id}`}
-                        name="isbn"
-                        value={formData.isbn}
-                        onChange={handleChange}
-                        required
-                    />
+          <div className="book-card-actions">
+            <button
+              type="button"
+              className="edit-btn"
+              onClick={handleEditClick}
+            >
+              ✏️ Update
+            </button>
 
-                    <button
-                        type="submit"
-                        disabled={submitting}
-                        className="edit-submit-btn"
-                    >
-                        {submitting ? "Updating..." : "Save Changes"}
-                    </button>
-
-                    <button
-                        type="button"
-                        className="edit-cancel-btn"
-                        onClick={() => {
-                            setFormData({
-                                title: book.title || "",
-                                author: book.author || "",
-                                category: book.category || "",
-                                isbn: book.isbn || "",
-                            });
-
-                            setIsEditing(false);
-                        }}
-                        disabled={submitting}
-                    >
-                        Cancel
-                    </button>
-                </form>
-            ) : (
-                <>
-                    <div className="book-card-content">
-                        <h3>{book.title}</h3>
-
-                        <p>
-                            <strong>Author:</strong> {book.author}
-                        </p>
-
-                        <p>
-                            <strong>Category:</strong> {book.category}
-                        </p>
-
-                        <p>
-                            <strong>ISBN:</strong> {book.isbn}
-                        </p>
-                    </div>
-
-                    <div className="book-card-actions">
-                        <button
-                            type="button"
-                            className="edit-btn"
-                            onClick={() => {
-                                setFormData({
-                                    title: book.title || "",
-                                    author: book.author || "",
-                                    category: book.category || "",
-                                    isbn: book.isbn || "",
-                                });
-
-                                setIsEditing(true);
-                            }}
-                        >
-                            ✏️ Update
-                        </button>
-
-                        <button
-                            type="button"
-                            className="delete-btn"
-                            onClick={() => onDelete(book.id)}
-                        >
-                            🗑️ Delete
-                        </button>
-                    </div>
-                </>
-            )}
-        </div>
-    );
+            <button
+              type="button"
+              className="delete-btn"
+              onClick={() => onDelete(book.id)}
+            >
+              🗑️ Delete
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default BookCard;

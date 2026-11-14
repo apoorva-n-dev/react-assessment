@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 
 import axiosInstance from "../api/axiosInstance";
@@ -8,6 +9,7 @@ import AddBook from "../components/AddBook";
 function Library() {
     const [books, setBooks] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -45,6 +47,17 @@ function Library() {
         };
     }, []);
 
+    // DEBOUNCING: Wait 500ms after typing stops
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchTerm);
+        }, 500);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [searchTerm]);
+
     // POST: Add a new book
     async function handleAddBook(bookData) {
         try {
@@ -61,9 +74,7 @@ function Library() {
             return true;
         } catch (err) {
             console.error("POST error:", err);
-
             alert("Unable to add the book. Please try again.");
-
             return false;
         }
     }
@@ -91,9 +102,7 @@ function Library() {
             return true;
         } catch (err) {
             console.error("PUT error:", err);
-
             alert("Unable to update the book. Please try again.");
-
             return false;
         }
     }
@@ -118,13 +127,12 @@ function Library() {
             );
         } catch (err) {
             console.error("DELETE error:", err);
-
             alert("Unable to delete the book. Please try again.");
         }
     }
 
-    // Search by title or author
-    const search = searchTerm.trim().toLowerCase();
+    // Search using the debounced value
+    const search = debouncedSearch.trim().toLowerCase();
 
     const filteredBooks = books.filter((book) => {
         const title = (book.title || "").toLowerCase();
@@ -141,7 +149,6 @@ function Library() {
             <Navbar />
 
             <main className="container">
-
                 {/* Hero Section */}
                 <section className="hero-section">
                     <div className="hero-content">
@@ -172,7 +179,6 @@ function Library() {
 
                 {/* Book Collection */}
                 <section className="library-section" id="books">
-
                     <div className="section-heading">
                         <div>
                             <p className="eyebrow">
@@ -258,7 +264,6 @@ function Library() {
                         © 2026 BookShelf Library Management System
                     </p>
                 </footer>
-
             </main>
         </div>
     );

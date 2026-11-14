@@ -6,6 +6,7 @@ function AddBook({ onAddBook }) {
         author: "",
         category: "",
         isbn: "",
+        status: "",
     });
 
     const [submitting, setSubmitting] = useState(false);
@@ -27,6 +28,7 @@ function AddBook({ onAddBook }) {
             author: formData.author.trim(),
             category: formData.category.trim(),
             isbn: formData.isbn.trim(),
+            status: formData.status.trim(),
         };
 
         if (
@@ -50,6 +52,7 @@ function AddBook({ onAddBook }) {
                     author: "",
                     category: "",
                     isbn: "",
+                    status: "",
                 });
 
                 alert("Book added successfully!");
@@ -125,6 +128,19 @@ function AddBook({ onAddBook }) {
                         name="isbn"
                         placeholder="Enter ISBN"
                         value={formData.isbn}
+                        onChange={handleChange}
+                        required/>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="status">Status</label>
+
+                    <input
+                        id="status"
+                        type="text"
+                        name="status"
+                        placeholder="Enter Status"
+                        value={formData.status}
                         onChange={handleChange}
                         required/>
                 </div>

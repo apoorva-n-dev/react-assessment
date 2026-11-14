@@ -4,32 +4,50 @@
       "title": "Clean Code",
       "author": "Robert C. Martin",
       "category": "Programming",
-      "isbn": "9780132350884"
+      "isbn": "9780132350884",
+      "id": "BH77byl6xwM",
+      "status": "not available"
     },
     {
       "title": "Learning React",
       "author": "Alex Banks",
       "category": "Web Development",
-      "isbn": "9781492051725"
+      "isbn": "9781492051725",
+      "id": "rW95CtJxQ1c",
+      "status": "available"
     },
     {
       "title": "JavaScript: The Good Parts",
       "author": "Douglas Crockford",
       "category": "JavaScript",
-      "isbn": "9780596517748"
+      "isbn": "9780596517748",
+      "id": "ZjOKHdKHST0",
+      "status": "not available"
     },
     {
       "title": "The Pragmatic Programmer",
       "author": "Andrew Hunt",
       "category": "Software Engineering",
-      "isbn": "9780135957059"
+      "isbn": "9780135957059",
+      "id": "DCxtVop4Aqw",
+      "status": "available"
     },
     {
       "title": "Python Crash Course",
       "author": "Eric Matthes",
       "category": "Programming",
-      "isbn": "9781718502703"
+      "isbn": "9781718502703",
+      "id": "j94p0Hw5364",
+      "status": "not available"
+    },
+    {
+      "title": "Java",
+      "author": "john",
+      "category": "programming",
+      "isbn": "ISB001",
+      "status": "avaliable",
+      "available": true,
+      "id": "l0p9xjia0jA"
     }
   ]
-  
 }
