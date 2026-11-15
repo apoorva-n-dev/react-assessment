@@ -1,0 +1,39 @@
+import type { Employee } from "../types/employee.types";
+
+interface EmployeeCardProps {
+  employee: Employee;
+  onEdit: (employee: Employee) => void;
+  onDelete: (id: number) => void;
+}
+
+export default function EmployeeCard({
+  employee,
+  onEdit,
+  onDelete
+}: EmployeeCardProps) {
+  return (
+    <div className="employee-card">
+
+      <h3>{employee.name}</h3>
+
+      <p>{employee.designation}</p>
+
+      <p className="email">{employee.email}</p>
+
+      <p>Department: {employee.department}</p>
+
+      <p>Salary: ₹{employee.salary}</p>
+
+      <div className="card-footer">
+        <button onClick={() => onEdit(employee)}>
+          Edit
+        </button>
+
+        <button onClick={() => onDelete(employee.id)}>
+          Delete
+        </button>
+      </div>
+
+    </div>
+  );
+}
