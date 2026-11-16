@@ -1,5 +1,5 @@
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
@@ -39,35 +39,30 @@ function App() {
   const [actionError, setActionError] = useState("");
 
   // Get unique departments
-  const departments = useMemo(
-    () => [...new Set(employees.map((emp) => emp.department))],
-    [employees]
-  );
+  const departments = [
+    ...new Set(employees.map((emp) => emp.department)),
+  ];
 
   // Department employee counts
-  const departmentCounts = useMemo(() => {
-    return employees.reduce((counts, employee) => {
-      counts[employee.department] =
-        (counts[employee.department] || 0) + 1;
+  const departmentCounts = employees.reduce((counts, employee) => {
+    counts[employee.department] =
+      (counts[employee.department] || 0) + 1;
 
-      return counts;
-    }, {} as Record<string, number>);
-  }, [employees]);
+    return counts;
+  }, {} as Record<string, number>);
 
   // Search and department filter
-  const filteredEmployees = useMemo(() => {
-    return employees.filter((employee) => {
-      const matchesSearch = employee.name
-        .toLowerCase()
-        .includes(search.toLowerCase());
+  const filteredEmployees = employees.filter((employee) => {
+    const matchesSearch = employee.name
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
-      const matchesDepartment =
-        selectedDepartment === "" ||
-        employee.department === selectedDepartment;
+    const matchesDepartment =
+      selectedDepartment === "" ||
+      employee.department === selectedDepartment;
 
-      return matchesSearch && matchesDepartment;
-    });
-  }, [employees, search, selectedDepartment]);
+    return matchesSearch && matchesDepartment;
+  });
 
   // Add or update employee
   const handleSubmit = async (data: EmployeeInput) => {
@@ -241,9 +236,7 @@ function App() {
                       key={department}
                     >
                       <h3>{department}</h3>
-
                       <h2>{count}</h2>
-
                       <p>Total Employees</p>
                     </div>
                   )
